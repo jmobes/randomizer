@@ -3,7 +3,7 @@ window.addEventListener("load", (event) => {
   const tableSize = createTable();
 
   // initializes array to null of set size (defaults to 100)
-  const namesArray = new Array(tableSize).fill(null);
+  const namesArray = [...Array(tableSize).keys()];
 
   // grabs element that displays available spots left
   const openSpots = document.querySelector(".openSpots");
@@ -68,7 +68,6 @@ window.addEventListener("load", (event) => {
       const tableCellNumber = document.createElement("div");
       tableCellNumber.className = `table__number`;
       tableCellNumber.textContent = i + 1;
-      tableCellNumber.setAttribute("data-number", i);
       cell.appendChild(tableCellNumber);
 
       const buyerName = document.createElement("div");
@@ -80,16 +79,18 @@ window.addEventListener("load", (event) => {
   }
 
   function addNameToTable() {
-    const name = document.querySelector("#name").value;
+    const name = String(document.querySelector("#name").value).toUpperCase();
     const quantity = document.querySelector("#quantity").value || 1;
     if (!name) return;
-    const tableCells = document.querySelectorAll(".table__number");
+
+    const tableCells = document.querySelectorAll(".table__buyer");
     console.log({ tableCells });
     const positions = assignRandomPosition(quantity);
+    const color = getRandomColor();
     for (let i = 0; i < positions.length; i++) {
-      const realPosition = tableCells[positions[i]].getAttribute("data-number");
-      console.log({ realPosition });
-      tableCells[realPosition].textContent = name;
+      tableCells[positions[i]].textContent = name;
+      const parent = tableCells[positions[i]].parentNode;
+      parent.style.backgroundColor = `rgb(${color.red},${color.green},${color.blue})`;
     }
   }
 
@@ -99,11 +100,19 @@ window.addEventListener("load", (event) => {
     for (let i = 0; i < quantity; i++) {
       let position = Math.floor(Math.random() * namesArray.length);
       console.log({ position });
-      positionArr.push(position);
+      positionArr.push(namesArray[position]);
       namesArray.splice(position, 1);
       openSpots.textContent = `${namesArray.length} spots left`;
     }
     console.log({ positionArr });
     return positionArr;
+  }
+
+  function getRandomColor() {
+    const red = Math.floor(Math.random() * 100);
+    const green = Math.floor(Math.random() * 100);
+    const blue = Math.floor(Math.random() * 100);
+
+    return { red, green, blue };
   }
 });

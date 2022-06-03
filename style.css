@@ -45,6 +45,10 @@ header h1 {
   border: 2px solid rgb(156, 154, 154);
   margin: 1px;
   padding: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .table__number {
@@ -55,4 +59,11 @@ header h1 {
 
 .table__buyer {
   word-wrap: break-word;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.openSpots {
+  text-align: center;
 }

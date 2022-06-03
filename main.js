@@ -1,36 +1,41 @@
 window.addEventListener("load", (event) => {
-  console.log("page is fully loaded");
+  // creates default table of size 100
   createTable();
 
+  // grabs the create table button and registers click event listener
   const tableCreateButton = document.getElementById("createTable");
   tableCreateButton.addEventListener("click", createTable);
 
+  // creates a table to be displayed on page
   function createTable(num = 100) {
+    // gets size of table from either input or defaults to 100
     const numOfTableCells = document.getElementById("cells").value || num;
     if (!numOfTableCells || numOfTableCells > 300 || numOfTableCells < 1) {
       return;
     }
 
+    // grabs table html element
     const tableContainer = document.querySelector(".table");
 
-    const reset = resetTable(tableContainer);
-    if (!reset) {
-      return;
-    }
-
-    deleteTable(tableContainer);
+    // resets table if user confirms from prompt
+    resetTable(tableContainer);
 
     createTableElements(numOfTableCells, tableContainer);
   }
 
+  // prompts user to reset table and removes it
   function resetTable(tableContainer) {
     if (!tableContainer.children.length) {
-      return true;
+      return;
     }
-    return window.confirm("Are you sure you want to reset the table?");
+    // gets boolean value from user click
+    let reset = window.confirm("Are you sure you want to reset the table?");
+
+    deleteTable(tableContainer, reset);
   }
 
-  function deleteTable(tableContainer) {
+  // removes table
+  function deleteTable(tableContainer, reset) {
     if (tableContainer.firstChild) {
       while (tableContainer.firstChild) {
         tableContainer.removeChild(tableContainer.firstChild);
@@ -39,6 +44,7 @@ window.addEventListener("load", (event) => {
     return;
   }
 
+  // creates all cells inside table and adds to DOM
   function createTableElements(numOfTableCells, tableContainer) {
     for (let i = 0; i < numOfTableCells; i++) {
       const cell = document.createElement("div");
@@ -51,7 +57,6 @@ window.addEventListener("load", (event) => {
 
       const buyerName = document.createElement("div");
       buyerName.className = "table__buyer";
-      buyerName.textContent = "Josephdfsfdsfdfsdfsdfdfs";
       cell.appendChild(buyerName);
 
       tableContainer.appendChild(cell);

@@ -22,8 +22,19 @@ header h1 {
 .table__cell {
   background-color: rgb(226, 222, 222);
   width: 100px;
-  height: 40px;
+  min-height: 40px;
   border-radius: 10px;
-  border: 2px solid black;
+  border: 2px solid rgb(156, 154, 154);
   margin: 1px;
+  padding: 2px;
+}
+
+.table__number {
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+.table__buyer {
+  word-wrap: break-word;
 }

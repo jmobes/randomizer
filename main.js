@@ -98,6 +98,7 @@ window.addEventListener("load", (event) => {
     console.log({ quantity });
     let positionArr = [];
     for (let i = 0; i < quantity; i++) {
+      if (!namesArray.length) break;
       let position = Math.floor(Math.random() * namesArray.length);
       console.log({ position });
       positionArr.push(namesArray[position]);

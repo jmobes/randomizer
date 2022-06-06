@@ -1,9 +1,10 @@
 window.addEventListener("load", (event) => {
-  // creates default table of size 100
-  const tableSize = createTable();
+  // initializes array to default size of 100
+  const DEFAULT_SIZE = 100;
+  const namesArray = [...Array(DEFAULT_SIZE).keys()];
 
-  // initializes array to null of set size (defaults to 100)
-  const namesArray = [...Array(tableSize).keys()];
+  // creates default table of size 100
+  createTable();
 
   // grabs the create table button and registers click event listener
   const tableCreateButton = document.getElementById("createTable");
@@ -12,8 +13,6 @@ window.addEventListener("load", (event) => {
   // grabs the enter name + quanity submit button and registers click event listener
   const nameSubmission = document.getElementById("names__submit");
   nameSubmission.addEventListener("click", addNameToTable);
-
-  addNameToTable();
 
   // creates a table to be displayed on page
   function createTable(num = 100) {
@@ -24,6 +23,8 @@ window.addEventListener("load", (event) => {
       return;
     }
 
+    updateNamesArray(namesArray, numOfTableCells);
+
     // grabs table html element
     const tableContainer = document.querySelector(".table");
 
@@ -32,7 +33,8 @@ window.addEventListener("load", (event) => {
 
     createTableElements(numOfTableCells, tableContainer);
 
-    return numOfTableCells || 100;
+    updateSpotsLeft(numOfTableCells);
+    // return numOfTableCells || 100;
   }
 
   // prompts user to reset table and removes it
@@ -73,7 +75,6 @@ window.addEventListener("load", (event) => {
 
       tableContainer.appendChild(cell);
     }
-    updateSpotsLeft(tableContainer.children.length);
   }
 
   function addNameToTable() {
@@ -95,6 +96,7 @@ window.addEventListener("load", (event) => {
       const parent = tableCells[positions[i]].parentNode;
       parent.style.backgroundColor = color;
     }
+    updateSpotsLeft(spotsRemaining);
   }
 
   function assignRandomPosition(quantity, spotsRemaining) {
@@ -111,11 +113,8 @@ window.addEventListener("load", (event) => {
 
   function getRandomColor() {
     const saturation = getRandomPercentageRange(0, 100);
-    console.log({ saturation });
-    const lightness = getRandomPercentageRange(50, 75);
-    console.log({ lightness });
+    const lightness = getRandomPercentageRange(50, 100);
     const rgb = getRandomPercentageRange(0, 360);
-    console.log({ rgb });
     return `hsl(${rgb},${saturation}%,${lightness}%)`;
   }
 
@@ -127,5 +126,25 @@ window.addEventListener("load", (event) => {
   function updateSpotsLeft(size) {
     const openSpots = document.querySelector(".openSpots");
     openSpots.textContent = `${size} spots left`;
+  }
+
+  function updateNamesArray(namesArray, tableSize) {
+    // removes items from names array if bigger than table size
+    if (namesArray.length > tableSize) {
+      const startIndex = tableSize;
+      const deleteCount = namesArray.length - tableSize;
+      namesArray.splice(startIndex, deleteCount);
+
+      // adds items to names array if smaller than tablesize
+    } else if (namesArray.length < tableSize) {
+      const startIndex = namesArray.length;
+      const numOfItemsToAppend = tableSize - namesArray.length;
+      let appendedItems = [...Array(numOfItemsToAppend).keys()];
+      appendedItems = appendedItems.map((v) => v + namesArray.length);
+      namesArray.splice(startIndex, 0, ...appendedItems);
+    } else {
+      return;
+    }
+    return;
   }
 });

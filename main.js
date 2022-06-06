@@ -5,10 +5,6 @@ window.addEventListener("load", (event) => {
   // initializes array to null of set size (defaults to 100)
   const namesArray = [...Array(tableSize).keys()];
 
-  // grabs element that displays available spots left
-  const openSpots = document.querySelector(".openSpots");
-  openSpots.textContent = `${tableSize} spots left`;
-
   // grabs the create table button and registers click event listener
   const tableCreateButton = document.getElementById("createTable");
   tableCreateButton.addEventListener("click", createTable);
@@ -22,7 +18,8 @@ window.addEventListener("load", (event) => {
   // creates a table to be displayed on page
   function createTable(num = 100) {
     // gets size of table from either input or defaults to 100
-    const numOfTableCells = document.getElementById("cells").value || num;
+    const numOfTableCells =
+      Number(document.getElementById("cells").value) || num;
     if (!numOfTableCells || numOfTableCells > 300 || numOfTableCells < 1) {
       return;
     }
@@ -76,6 +73,7 @@ window.addEventListener("load", (event) => {
 
       tableContainer.appendChild(cell);
     }
+    updateSpotsLeft(tableContainer.children.length);
   }
 
   function addNameToTable() {
@@ -84,7 +82,6 @@ window.addEventListener("load", (event) => {
     if (!name) return;
 
     const tableCells = document.querySelectorAll(".table__buyer");
-    console.log({ tableCells });
     const positions = assignRandomPosition(quantity);
     const color = getRandomColor();
     for (let i = 0; i < positions.length; i++) {
@@ -95,17 +92,14 @@ window.addEventListener("load", (event) => {
   }
 
   function assignRandomPosition(quantity) {
-    console.log({ quantity });
     let positionArr = [];
     for (let i = 0; i < quantity; i++) {
       if (!namesArray.length) break;
       let position = Math.floor(Math.random() * namesArray.length);
-      console.log({ position });
       positionArr.push(namesArray[position]);
       namesArray.splice(position, 1);
-      openSpots.textContent = `${namesArray.length} spots left`;
+      updateSpotsLeft(namesArray.length);
     }
-    console.log({ positionArr });
     return positionArr;
   }
 
@@ -115,5 +109,11 @@ window.addEventListener("load", (event) => {
     const blue = Math.floor(Math.random() * 100);
 
     return { red, green, blue };
+  }
+
+  // grabs element that displays available spots left and changes value depending on table spots left
+  function updateSpotsLeft(size) {
+    const openSpots = document.querySelector(".openSpots");
+    openSpots.textContent = `${size} spots left`;
   }
 });

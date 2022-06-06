@@ -96,7 +96,6 @@ window.addEventListener("load", (event) => {
       const parent = tableCells[positions[i]].parentNode;
       parent.style.backgroundColor = color;
     }
-    updateSpotsLeft(spotsRemaining);
   }
 
   function assignRandomPosition(quantity, spotsRemaining) {

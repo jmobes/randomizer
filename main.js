@@ -89,12 +89,10 @@ window.addEventListener("load", (event) => {
       return;
     }
     const positions = assignRandomPosition(quantity, spotsRemaining);
-    // const color = getRandomColor();
     const color = getRandomColor();
     for (let i = 0; i < positions.length; i++) {
       tableCells[positions[i]].textContent = name;
       const parent = tableCells[positions[i]].parentNode;
-      // parent.style.backgroundColor = `rgb(${color.red},${color.green},${color.blue})`;
       parent.style.backgroundColor = color;
     }
   }
@@ -112,11 +110,17 @@ window.addEventListener("load", (event) => {
   }
 
   function getRandomColor() {
-    // const red = Math.floor(Math.random() * 100);
-    // const green = Math.floor(Math.random() * 100);
-    // const blue = Math.floor(Math.random() * 100);
-    // return { red, green, blue };
-    return `hsl(${Math.floor(Math.random() * 360)}, 100%, 75%)`;
+    const saturation = getRandomPercentageRange(0, 100);
+    console.log({ saturation });
+    const lightness = getRandomPercentageRange(50, 75);
+    console.log({ lightness });
+    const rgb = getRandomPercentageRange(0, 360);
+    console.log({ rgb });
+    return `hsl(${rgb},${saturation}%,${lightness}%)`;
+  }
+
+  function getRandomPercentageRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
   // grabs element that displays available spots left and changes value depending on table spots left

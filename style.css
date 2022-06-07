@@ -42,9 +42,12 @@ main {
 
 .table {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   flex-basis: 90%;
+  max-height: 520px;
+  align-content: center;
 }
 
 .table__cell {
@@ -78,6 +81,8 @@ main {
   font-size: 20px;
   font-weight: bold;
   width: 10%;
+  overflow-y: auto;
+  max-height: 520px;
 }
 
 .history__item {

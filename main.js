@@ -157,22 +157,23 @@ window.addEventListener("load", (event) => {
   }
 
   function updateHistory() {
-    console.log("updating history...");
     const asideElement = document.querySelector(".history");
     removeAllChildNodes(asideElement);
     historyArray = historyArray.sort((a, b) => compare(a, b));
-    console.log({ historyArray });
-    console.log(asideElement);
     historyArray.map((element) => {
       const childContainer = document.createElement("div");
-      const buyerName = (document.createElement("div").textContent =
-        element.name);
-      const buyerSpots = (document.createElement(
-        "div"
-      ).textContent = `${element.positions.map((index) => index + 1).join()}`);
-      childContainer.append(buyerName);
-      childContainer.append(buyerSpots);
-      asideElement.append(childContainer);
+      childContainer.className = "history__item";
+      const buyerName = document.createElement("div");
+      buyerName.textContent = element.name;
+      buyerName.className = "history__name";
+      const buyerSpots = document.createElement("div");
+      buyerSpots.textContent = `${element.positions
+        .map((index) => index + 1)
+        .join(", ")}`;
+      buyerSpots.className = "history__spots";
+      childContainer.appendChild(buyerName);
+      childContainer.appendChild(buyerSpots);
+      asideElement.appendChild(childContainer);
     });
   }
 
@@ -183,8 +184,8 @@ window.addEventListener("load", (event) => {
   }
 
   function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
+    while (parent.firstElementChild) {
+      parent.removeChild(parent.firstElementChild);
     }
   }
 });

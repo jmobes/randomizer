@@ -67,3 +67,9 @@ header h1 {
 .openSpots {
   text-align: center;
 }
+
+.history {
+  position: absolute;
+  top: 50%;
+  left: 0;
+}

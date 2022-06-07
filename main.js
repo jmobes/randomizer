@@ -3,6 +3,9 @@ window.addEventListener("load", (event) => {
   const DEFAULT_SIZE = 100;
   const namesArray = [...Array(DEFAULT_SIZE).keys()];
 
+  // array to keep track of names and spots
+  let historyArray = [];
+
   // creates default table of size 100
   createTable();
 
@@ -15,10 +18,11 @@ window.addEventListener("load", (event) => {
   nameSubmission.addEventListener("click", addNameToTable);
 
   // creates a table to be displayed on page
-  function createTable(num = 100) {
+  function createTable() {
     // gets size of table from either input or defaults to 100
+    const DEFAULT_SIZE = 100;
     const numOfTableCells =
-      Number(document.getElementById("cells").value) || num;
+      Number(document.getElementById("cells").value) || DEFAULT_SIZE;
     if (!numOfTableCells || numOfTableCells > 300 || numOfTableCells < 1) {
       return;
     }
@@ -80,7 +84,10 @@ window.addEventListener("load", (event) => {
   function addNameToTable() {
     const name = String(document.querySelector("#name").value).toUpperCase();
     const quantity = document.querySelector("#quantity").value || 1;
-    if (!name) return;
+    if (!name || isNaN(quantity) || quantity < 1) {
+      console.log("please enter a valid name or quantity");
+      return;
+    }
 
     const tableCells = document.querySelectorAll(".table__buyer");
     const spotsRemaining = namesArray.length;
@@ -91,6 +98,8 @@ window.addEventListener("load", (event) => {
     }
     const positions = assignRandomPosition(quantity, spotsRemaining);
     const color = getRandomColor();
+    historyArray.push({ name, positions, color });
+    updateHistory();
     for (let i = 0; i < positions.length; i++) {
       tableCells[positions[i]].textContent = name;
       const parent = tableCells[positions[i]].parentNode;
@@ -145,5 +154,37 @@ window.addEventListener("load", (event) => {
       return;
     }
     return;
+  }
+
+  function updateHistory() {
+    console.log("updating history...");
+    const asideElement = document.querySelector(".history");
+    removeAllChildNodes(asideElement);
+    historyArray = historyArray.sort((a, b) => compare(a, b));
+    console.log({ historyArray });
+    console.log(asideElement);
+    historyArray.map((element) => {
+      const childContainer = document.createElement("div");
+      const buyerName = (document.createElement("div").textContent =
+        element.name);
+      const buyerSpots = (document.createElement(
+        "div"
+      ).textContent = `${element.positions.map((index) => index + 1).join()}`);
+      childContainer.append(buyerName);
+      childContainer.append(buyerSpots);
+      asideElement.append(childContainer);
+    });
+  }
+
+  function compare(a, b) {
+    if (a.name < b.name) return -1;
+    else if (a.name < b.name) return 1;
+    else return 0;
+  }
+
+  function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
   }
 });

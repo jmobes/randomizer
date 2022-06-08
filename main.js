@@ -108,7 +108,6 @@ window.addEventListener("load", (event) => {
       parent.style.backgroundColor = color.hslString;
       parentId = name.replaceAll(" ", "") + Date.now();
       parent.classList.add(parentId);
-      console.log({ parent });
     }
     if (parent && parentId) {
       changeNodeColor(parentId);
@@ -182,7 +181,7 @@ window.addEventListener("load", (event) => {
       const colorPicker = document.createElement("input");
       colorPicker.setAttribute("type", "color");
       colorPicker.setAttribute("value", hslToHex(color.h, color.s, color.l));
-      colorPicker.classList.add("class", "colorPicker");
+      colorPicker.classList.add("colorPicker");
       const buyerName = document.createElement("div");
       buyerName.textContent = element.name;
       buyerName.className = "history__name";
@@ -207,10 +206,6 @@ window.addEventListener("load", (event) => {
     else return 0;
   }
 
-  function sortNums(arr) {
-    console.log({arr})
-  }
-
   function removeAllChildNodes(parent) {
     while (parent.firstElementChild) {
       parent.removeChild(parent.firstElementChild);
@@ -233,7 +228,6 @@ window.addEventListener("load", (event) => {
 
   function changeNodeColor(id) {
     const parentNodes = document.querySelectorAll(`.${id}`);
-    console.log({ parentNodes });
     const colorPickerInput = document.querySelector(".colorPicker");
     colorPickerInput.addEventListener("input", (e) => {
       const newColor = e.target.value;

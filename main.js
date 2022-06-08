@@ -172,6 +172,10 @@ window.addEventListener("load", (event) => {
     removeAllChildNodes(asideElement);
 
     historyArray = historyArray.sort((a, b) => compare(a, b));
+    historyArray.map(element => {
+      const positions = element.positions;
+      positions.sort((a,b) => a - b);
+    })
     historyArray.map((element) => {
       const childContainer = document.createElement("div");
       childContainer.className = "history__item";
@@ -201,6 +205,10 @@ window.addEventListener("load", (event) => {
     if (a.name < b.name) return -1;
     else if (a.name < b.name) return 1;
     else return 0;
+  }
+
+  function sortNums(arr) {
+    console.log({arr})
   }
 
   function removeAllChildNodes(parent) {

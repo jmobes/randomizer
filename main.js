@@ -96,21 +96,26 @@ window.addEventListener("load", (event) => {
     if (quantity > spotsRemaining) {
       return;
     }
-    const positions = assignRandomPosition(quantity, spotsRemaining);
+    const positions = assignRandomPosition(quantity);
     const color = getRandomColor();
     historyArray.push({ name, positions, color });
     updateHistory(color.hslValues);
+    let parent;
+    let parentId;
     for (let i = 0; i < positions.length; i++) {
       tableCells[positions[i]].textContent = name;
-      const parent = tableCells[positions[i]].parentNode;
+      parent = tableCells[positions[i]].parentNode;
       parent.style.backgroundColor = color.hslString;
-      const parentId = name.replaceAll(" ", "");
+      parentId = name.replaceAll(" ", "") + Date.now();
       parent.classList.add(parentId);
+      console.log({ parent });
+    }
+    if (parent && parentId) {
       changeNodeColor(parentId);
     }
   }
 
-  function assignRandomPosition(quantity, spotsRemaining) {
+  function assignRandomPosition(quantity) {
     let positionArr = [];
     for (let i = 0; i < quantity; i++) {
       if (!namesArray.length) break;
@@ -164,7 +169,6 @@ window.addEventListener("load", (event) => {
 
   function updateHistory(color) {
     const asideElement = document.querySelector(".history");
-    console.log({ color });
     removeAllChildNodes(asideElement);
 
     historyArray = historyArray.sort((a, b) => compare(a, b));
@@ -174,7 +178,7 @@ window.addEventListener("load", (event) => {
       const colorPicker = document.createElement("input");
       colorPicker.setAttribute("type", "color");
       colorPicker.setAttribute("value", hslToHex(color.h, color.s, color.l));
-      colorPicker.setAttribute("id", "colorPicker");
+      colorPicker.classList.add("class", "colorPicker");
       const buyerName = document.createElement("div");
       buyerName.textContent = element.name;
       buyerName.className = "history__name";
@@ -213,17 +217,21 @@ window.addEventListener("load", (event) => {
       const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
       return Math.round(255 * color)
         .toString(16)
-        .padStart(2, "0"); // convert to Hex and prefix "0" if needed
+        .padStart(2, "0");
     };
     const hexString = `#${f(0)}${f(8)}${f(4)}`;
-    console.log({ hexString });
     return hexString;
   }
 
   function changeNodeColor(id) {
     const parentNodes = document.querySelectorAll(`.${id}`);
-    console.log(parentNodes);
-    const colorPickerInput = document.getElementById("colorPicker");
-    console.log({ colorPickerInput });
+    console.log({ parentNodes });
+    const colorPickerInput = document.querySelector(".colorPicker");
+    colorPickerInput.addEventListener("input", (e) => {
+      const newColor = e.target.value;
+      parentNodes.forEach((node) => {
+        node.style.backgroundColor = newColor;
+      });
+    });
   }
 });

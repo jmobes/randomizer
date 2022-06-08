@@ -99,11 +99,14 @@ window.addEventListener("load", (event) => {
     const positions = assignRandomPosition(quantity, spotsRemaining);
     const color = getRandomColor();
     historyArray.push({ name, positions, color });
-    updateHistory();
+    updateHistory(color.hslValues);
     for (let i = 0; i < positions.length; i++) {
       tableCells[positions[i]].textContent = name;
       const parent = tableCells[positions[i]].parentNode;
-      parent.style.backgroundColor = color;
+      parent.style.backgroundColor = color.hslString;
+      const parentId = name.replaceAll(" ", "");
+      parent.classList.add(parentId);
+      changeNodeColor(parentId);
     }
   }
 
@@ -123,7 +126,10 @@ window.addEventListener("load", (event) => {
     const saturation = getRandomPercentageRange(0, 100);
     const lightness = getRandomPercentageRange(50, 100);
     const rgb = getRandomPercentageRange(0, 360);
-    return `hsl(${rgb},${saturation}%,${lightness}%)`;
+    return {
+      hslString: `hsl(${rgb},${saturation}%,${lightness}%)`,
+      hslValues: { h: rgb, s: saturation, l: lightness },
+    };
   }
 
   function getRandomPercentageRange(min, max) {
@@ -156,13 +162,19 @@ window.addEventListener("load", (event) => {
     return;
   }
 
-  function updateHistory() {
+  function updateHistory(color) {
     const asideElement = document.querySelector(".history");
+    console.log({ color });
     removeAllChildNodes(asideElement);
+
     historyArray = historyArray.sort((a, b) => compare(a, b));
     historyArray.map((element) => {
       const childContainer = document.createElement("div");
       childContainer.className = "history__item";
+      const colorPicker = document.createElement("input");
+      colorPicker.setAttribute("type", "color");
+      colorPicker.setAttribute("value", hslToHex(color.h, color.s, color.l));
+      colorPicker.setAttribute("id", "colorPicker");
       const buyerName = document.createElement("div");
       buyerName.textContent = element.name;
       buyerName.className = "history__name";
@@ -171,7 +183,11 @@ window.addEventListener("load", (event) => {
         .map((index) => index + 1)
         .join(", ")}`;
       buyerSpots.className = "history__spots";
-      childContainer.appendChild(buyerName);
+      const nameColorContainer = document.createElement("div");
+      nameColorContainer.classList.add("history__nameColor");
+      nameColorContainer.appendChild(buyerName);
+      nameColorContainer.appendChild(colorPicker);
+      childContainer.appendChild(nameColorContainer);
       childContainer.appendChild(buyerSpots);
       asideElement.appendChild(childContainer);
     });
@@ -187,5 +203,27 @@ window.addEventListener("load", (event) => {
     while (parent.firstElementChild) {
       parent.removeChild(parent.firstElementChild);
     }
+  }
+
+  function hslToHex(h, s, l) {
+    l /= 100;
+    const a = (s * Math.min(l, 1 - l)) / 100;
+    const f = (n) => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color)
+        .toString(16)
+        .padStart(2, "0"); // convert to Hex and prefix "0" if needed
+    };
+    const hexString = `#${f(0)}${f(8)}${f(4)}`;
+    console.log({ hexString });
+    return hexString;
+  }
+
+  function changeNodeColor(id) {
+    const parentNodes = document.querySelectorAll(`.${id}`);
+    console.log(parentNodes);
+    const colorPickerInput = document.getElementById("colorPicker");
+    console.log({ colorPickerInput });
   }
 });

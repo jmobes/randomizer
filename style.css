@@ -45,7 +45,7 @@ main {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  flex-basis: 90%;
+  width: 90vw;
   max-height: 520px;
   align-content: center;
 }
@@ -79,7 +79,6 @@ main {
 .history {
   text-align: center;
   font-size: 20px;
-  font-weight: bold;
   width: 10%;
   overflow-y: auto;
   max-height: 520px;
@@ -90,4 +89,24 @@ main {
   padding-top: 10px;
   font-size: 14px;
   overflow-wrap: break-word;
+}
+
+.history__nameColor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.history__name {
+  font-weight: bold;
+}
+
+.history__nameColor input {
+  border: none;
+  background: none;
+  width: 25px;
+  height: 25px;
+}
+
+.history__spots {
 }

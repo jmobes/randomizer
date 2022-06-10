@@ -1,17 +1,18 @@
+import { Table } from "./Table";
+
 export class Form {
     constructor() {
-        this.nameSubmission = document.getElementById("names__submit");
         this.tableSizeElement = document.getElementById("cells");
+        this.createTableButton = document.getElementById("createTable");
         this.nameInputElement = document.querySelector("#name");
         this.quantityInputElement = document.querySelector("#quantity");
-        this.createTableButton = document.getElementById("createTable");
-
+        this.nameQuantitySubmit = document.getElementById("names__submit");
+        this.table = new Table();
     }
 
     registerEventListeners = () => {
-        this.nameSubmission.addEventListener("click", addNameToTable);
-        this.createTableButton.addEventListener("click", createTable);
-
+        this.nameQuantitySubmit.addEventListener("click", this.table.addName(this.getName(), this.getQuantity()));
+        this.createTableButton.addEventListener("click", this.table.createTable(this.getTableSize()));
     }
 
     getTableSize = () => {

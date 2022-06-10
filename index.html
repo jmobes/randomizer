@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Give Away Table Creator</h1>
-    </header>
 
-    <div class="cells">
-      <label for="cells">Enter number of spots</label>
-      <input type="number" id="cells" />
-      <button id="createTable">Create Table</button>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
 
-    <div class="names">
+<body>
+  <header>
+    <h1>Give Away Table Creator</h1>
+  </header>
+
+  <div class="cells">
+    <label for="cells">Enter number of spots</label>
+    <input type="number" id="cells" />
+    <button id="createTable">Create Table</button>
+  </div>
+
+  <div class="names">
+    <div>
       <div>
-        <div>
-          <label for="name">Enter name of buyer</label>
-          <input
-            class="names__input names__input--name"
-            type="text"
-            id="name"
-          />
-        </div>
-        <div>
-          <label for="quantity">Enter quantity bought</label>
-          <input
-            type="number"
-            class="names__input names__input--quantity"
-            id="quantity"
-          />
-        </div>
+        <label for="name">Enter name of buyer</label>
+        <input class="names__input names__input--name" type="text" id="name" />
       </div>
-      <button id="names__submit">Submit</button>
+      <div>
+        <label for="quantity">Enter quantity bought</label>
+        <input type="number" class="names__input names__input--quantity" id="quantity" />
+      </div>
     </div>
+    <button id="names__submit">Submit</button>
+  </div>
 
-    <h2 class="openSpots"></h2>
+  <h2 class="openSpots"></h2>
 
-    <main>
-      <div class="history"></div>
-      <div class="table hsl(360,45%,14%)"></div>
-    </main>
+  <main>
+    <div class="history"></div>
+    <div class="table hsl(360,45%,14%)"></div>
+  </main>
 
-    <script src="./main.js"></script>
-  </body>
+  <script type="module" src="./main.js"></script>
+</body>
+
 </html>

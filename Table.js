@@ -1,3 +1,7 @@
+import { Form } from "./Form";
+import { History } from "./History";
+import { Util } from "./Util";
+
 export class Table {
     constructor() {
         super();
@@ -5,6 +9,8 @@ export class Table {
         this.names = [...Array(DEFAULT_SIZE).keys()];
         this.tableElement = document.querySelector(".table");
         this.spotsAvailableElement = document.querySelector(".openSpots");
+        this.formObj = new Form();
+        this.historyObj = new History();
     }
 
     registerEventListeners = () => {
@@ -45,7 +51,7 @@ export class Table {
         let reset = window.confirm("Are you sure you want to reset the table?");
 
         if(reset) {
-            deleteTable(tableContainer, reset);
+            this.deleteTable();
         }
     } 
 
@@ -100,10 +106,10 @@ export class Table {
           return;
         }
 
-        const positions = assignRandomPosition(quantity);
-        const color = getRandomColor();
-        historyArray.push({ name, positions, color });
-        updateHistory(color.hslValues);
+        const positions = this.assignRandomPosition(quantity);
+        const color = Util.getRandomColor();
+        this.historyObj.history.push({ name, positions, color });
+        this.historyObj.updateHistory(color.hslValues);
         let parent;
         let parentId;
         for (let i = 0; i < positions.length; i++) {
@@ -114,7 +120,7 @@ export class Table {
           parent.classList.add(parentId);
         }
         if (parent && parentId) {
-          changeNodeColor(parentId);
+          Util.changeNodeColor(parentId);
         }
     }
 
@@ -130,22 +136,8 @@ export class Table {
           let position = Math.floor(Math.random() * this.names.length);
           positionArr.push(this.names[position]);
           namesArray.splice(position, 1);
-          updateSpotsLeft(this.namess.length);
+          this.updateAvailableSpots(this.names.length);
         }
         return positionArr;
-    }
-
-    getRandomColor = () => {
-        const saturation = getRandomPercentageRange(0, 100);
-        const lightness = getRandomPercentageRange(50, 100);
-        const rgb = getRandomPercentageRange(0, 360);
-        return {
-          hslString: `hsl(${rgb},${saturation}%,${lightness}%)`,
-          hslValues: { h: rgb, s: saturation, l: lightness },
-        };
-    }
-
-    getRandomPercentageRange = (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1) + min);
     }
 }

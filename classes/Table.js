@@ -1,12 +1,11 @@
-import { Form } from "./Form";
-import { History } from "./History";
-import { Util } from "./Util";
+import { Form } from './Form.js';
+import { History } from './History.js';
+import { Util } from './Util.js';
 
 export class Table {
     constructor() {
-        super();
         this.size = 100;
-        this.names = [...Array(DEFAULT_SIZE).keys()];
+        this.names = [...Array(this.size).keys()];
         this.tableElement = document.querySelector(".table");
         this.spotsAvailableElement = document.querySelector(".openSpots");
         this.formObj = new Form();
@@ -14,10 +13,12 @@ export class Table {
     }
 
     registerEventListeners = () => {
+        this.formObj.nameQuantitySubmit.addEventListener("click", this.addName(this.formObj.getName(), this.formObj.getQuantity()));
+        this.createTableButton.addEventListener("click", this.createTable(this.formObj.getTableSize()));
     }
 
     createTable = (tableSize) => {
-        const tableSize = tableSize || this.size;
+        tableSize = tableSize || this.size;
         if (!tableSize || tableSize > 300 || tableSize < 1) {
             return;
         }

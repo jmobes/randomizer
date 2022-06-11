@@ -1,5 +1,3 @@
-import { Table } from "./Table";
-
 export class Form {
     constructor() {
         this.tableSizeElement = document.getElementById("cells");
@@ -7,7 +5,6 @@ export class Form {
         this.nameInputElement = document.querySelector("#name");
         this.quantityInputElement = document.querySelector("#quantity");
         this.nameQuantitySubmit = document.getElementById("names__submit");
-        this.table = new Table();
     }
 
     registerEventListeners = () => {

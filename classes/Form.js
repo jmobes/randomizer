@@ -7,11 +7,6 @@ export class Form {
         this.nameQuantitySubmit = document.getElementById("names__submit");
     }
 
-    registerEventListeners = () => {
-        this.nameQuantitySubmit.addEventListener("click", this.table.addName(this.getName(), this.getQuantity()));
-        this.createTableButton.addEventListener("click", this.table.createTable(this.getTableSize()));
-    }
-
     getTableSize = () => {
         return this.tableSizeElement.value;
     }

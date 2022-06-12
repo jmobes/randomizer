@@ -10,11 +10,12 @@ export class Table {
         this.spotsAvailableElement = document.querySelector(".openSpots");
         this.formObj = new Form();
         this.historyObj = new History();
+        this.registerEventListeners();
     }
 
     registerEventListeners = () => {
-        this.formObj.nameQuantitySubmit.addEventListener("click", this.addName(this.formObj.getName(), this.formObj.getQuantity()));
-        this.createTableButton.addEventListener("click", this.createTable(this.formObj.getTableSize()));
+        this.formObj.nameQuantitySubmit.addEventListener("click", () => this.addName(this.formObj.getName(), this.formObj.getQuantity()));
+        this.formObj.createTableButton.addEventListener("click", () => this.createTable(this.formObj.getTableSize()));
     }
 
     createTable = (tableSize) => {
@@ -136,7 +137,7 @@ export class Table {
           if (!this.names.length) break;
           let position = Math.floor(Math.random() * this.names.length);
           positionArr.push(this.names[position]);
-          namesArray.splice(position, 1);
+          this.names.splice(position, 1);
           this.updateAvailableSpots(this.names.length);
         }
         return positionArr;

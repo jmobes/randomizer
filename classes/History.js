@@ -1,13 +1,14 @@
+import { Util } from "./Util.js";
 export class History {
     constructor() {
         this.history = [];
         this.historyElement = document.querySelector(".history");
     }
 
-    updateHistory = () => {
+    updateHistory = (color) => {
         this.removeAllChildNodes(this.historyElement);
 
-        this.history = this.history.sort((a, b) => compare(a, b));
+        this.history = this.history.sort((a, b) => Util.compare(a, b));
         this.history.map(element => {
           const positions = element.positions;
           positions.sort((a,b) => a - b);
@@ -17,7 +18,7 @@ export class History {
           childContainer.className = "history__item";
           const colorPicker = document.createElement("input");
           colorPicker.setAttribute("type", "color");
-          colorPicker.setAttribute("value", hslToHex(color.h, color.s, color.l));
+          colorPicker.setAttribute("value", Util.hslToHex(color.h, color.s, color.l));
           colorPicker.classList.add("colorPicker");
           const buyerName = document.createElement("div");
           buyerName.textContent = element.name;
@@ -33,7 +34,7 @@ export class History {
           nameColorContainer.appendChild(colorPicker);
           childContainer.appendChild(nameColorContainer);
           childContainer.appendChild(buyerSpots);
-          asideElement.appendChild(childContainer);
+          this.historyElement.appendChild(childContainer);
         });
     }
 

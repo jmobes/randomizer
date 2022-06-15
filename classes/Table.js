@@ -122,7 +122,7 @@ export class Table {
           parent.classList.add(parentId);
         }
         if (parent && parentId) {
-          Util.changeNodeColor(parentId);
+          Util.changeNodeColor(parentId, this.historyObj.history);
         }
     }
 

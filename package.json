@@ -1,0 +1,23 @@
+{
+  "name": "randomizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest --watchAll --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmobes/randomizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmobes/randomizer/issues"
+  },
+  "homepage": "https://github.com/jmobes/randomizer#readme",
+  "dependencies": {
+    "jest": "^28.1.1"
+  }
+}

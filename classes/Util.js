@@ -15,15 +15,18 @@ export class Util {
         return hexString;
     }
 
-    static changeNodeColor = (id) => {
+    static changeNodeColor = (id, colorInputs) => {
+        id = id.slice(1);
+        console.log({colorInputs})
         const parentNodes = document.querySelectorAll(`.${id}`);
+        console.log({parentNodes})
         const colorPickerInput = document.querySelector(".colorPicker");
-        colorPickerInput.addEventListener("input", (e) => {
-          const newColor = e.target.value;
-          parentNodes.forEach((node) => {
-            node.style.backgroundColor = newColor;
-          });
-        });
+        // colorPickerInput.addEventListener("input", (e) => {
+        //   const newColor = e.target.value;
+        //   parentNodes.forEach((node) => {
+        //     node.style.backgroundColor = newColor;
+        //   });
+        // });
     }
 
     static compare = (a, b) => {

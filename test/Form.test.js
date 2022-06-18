@@ -1,10 +1,12 @@
-import { jest } from '@jest/globals';
-import { Form } from '../classes/Form';
-
+import { Form } from '../classes/Form.js';
 
 describe('Form class', () => {
-    it('initializes form instance', () => {
-        const form = new Form();
-        expect(form).toBeDefined();
+    let form;
+
+    beforeEach(() => {
+        form = new Form();
     })
+    it('initializes form instance', () => {
+        expect(form).toBeDefined();
+    });
 })

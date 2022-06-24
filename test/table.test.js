@@ -1,5 +1,9 @@
 import { Table } from '../classes/Table.js';
 
+class MockTable {
+    
+}
+
 describe('table functions', () => {
     let table;
     beforeEach(() => {
@@ -11,6 +15,6 @@ describe('table functions', () => {
     })
 
     it('should assign a random position', () => {
-
+        const positionArray = table.assignRandomPosition(10);
     })
 });

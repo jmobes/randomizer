@@ -16,6 +16,6 @@ describe('table functions', () => {
 
     it('should assign a random position', () => {
         const positionArray = table.assignRandomPosition(10);
-        expect(positionArray).toBeTruthy();
+        expect(positionArray).toEqual(expect.any(Array));
     })
 });

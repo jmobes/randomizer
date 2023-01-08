@@ -55,4 +55,8 @@ export class History {
             parent.removeChild(parent.firstElementChild);
         }
     }
+
+    resetHistory = () => {
+      this.history = [];
+    }
 }

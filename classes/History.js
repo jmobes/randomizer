@@ -57,6 +57,8 @@ export class History {
     }
 
     resetHistory = () => {
-      this.history = [];
+      while(this.historyElement.firstChild) {
+        this.historyElement.firstChild.remove();
+      }
     }
 }

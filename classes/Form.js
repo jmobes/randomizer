@@ -1,3 +1,4 @@
+// Form class
 export class Form {
     constructor() {
         this.tableSizeElement = document.getElementById("cells");
